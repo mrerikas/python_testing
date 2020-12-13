@@ -8,11 +8,15 @@
 from main import *
 import pytest
 import requests
+import mock
 
 
-def test_website_response():
-    response = requests.get("https://www.google.com")
-    assert True
+@mock.patch('requests.get')
+def test_website_response(mock_get):
+    mock_get.return_value.status_code = 200
+    response = requests.get("https://www.google.com/")
+    assert response.status_code == 200
+
 
 @pytest.fixture()
 def add_ten():

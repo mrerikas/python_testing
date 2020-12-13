@@ -1,8 +1,8 @@
 import requests
 
 if __name__ == '__main__':
-    response = requests.get("https://www.google.com")
-    print(response.content)
+    r = requests.get("https://www.google.com")
+    print(r.content)
 
 
 def sum_(a, b):
