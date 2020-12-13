@@ -9,6 +9,27 @@ from main import *
 import pytest
 import requests
 import mock
+from main import MockClass
+
+
+def test_check_if_true():
+    with pytest.raises(ZeroDivisionError):
+        assert division_by_zero()
+    assert check_if_true(1, 2) == 'a < b'
+    assert check_if_true(2, 1) == 'a > b'
+
+
+def test_mock_class_return_one():
+    with mock.patch.object(MockClass, 'return_1', 3):
+        instance_of_mock_class = MockClass()
+        x = instance_of_mock_class.return_1
+        assert x == 3
+
+
+def test_class_return_one():
+    instance_of_mock_class = MockClass()
+    x = instance_of_mock_class.return_1()
+    assert x == 1
 
 
 @mock.patch('requests.get')
@@ -23,8 +44,17 @@ def add_ten():
     return 10
 
 
-def test_sum_(add_ten):
-    assert sum_(1, add_ten) == 11
+test_data = [
+    (1, 1, 2),
+    (2, 2, 4),
+    (2, 3, 5),
+    (5, 4, 9)
+]
+
+
+@pytest.mark.parametrize("a, b, expected", test_data)
+def test_sum_(a, b, expected):
+    assert sum_(a, b) == expected
 
 
 def test_subtract():
